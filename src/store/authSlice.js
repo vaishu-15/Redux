@@ -14,7 +14,6 @@ export const loginUser = createAsyncThunk(
       }),
     });
     const data = await response.json();
-    console.log('Login API response:', data);
     return data;
   },
 );
