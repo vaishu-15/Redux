@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React, useState,useEffect} from 'react';
 import {
   Text,
   TextInput,
@@ -12,24 +12,24 @@ import {loginUser} from '../store/authSlice';
 
 const Login = props => {
   const dispatch = useDispatch();
-  const [username, setUsername] = useState('kminchelle');
-  const [password, setPassword] = useState('0lelplR');
-  const {status, error} = useSelector(state => state.auth);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const {status, error, user} = useSelector(state => state.auth);
 
-  const handleLogin = () => {
-    dispatch(loginUser({username, password}))
-      .then(() => {
-        const {user} = useSelector(state => state.auth);
-        if (user && user.username && user.password) {
-          props.navigation.navigate('Home');
-        } else {
-          Alert.alert('Error', 'Invalid username or password.');
-        }
-      })
-      .catch(error => {
-        Alert.alert('Error', 'Failed to login. Please try again.');
-      });
+  const handleLogin = async () => {
+    if (!username || !password) {
+      Alert.alert('Error', 'Please enter username and password.');
+      return;
+    }
+      dispatch(loginUser({ username, password }))
   };
+
+    useEffect(() => {
+    if (user && user.username === username) {
+      props.navigation.navigate('Home');
+    }
+  }, [user]);
+
 
   return (
     <View style={{flex: 1, justifyContent: 'center', padding: 20}}>

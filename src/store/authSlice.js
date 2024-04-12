@@ -23,24 +23,22 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     user: null,
-    status: 'idle',
+    loading: false,
     error: null,
   },
   reducers: {},
   extraReducers: builder => {
     builder
       .addCase(loginUser.pending, state => {
-        state.status = 'loading';
+        state.loading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.loading = false;
         state.user = action.payload;
-        console.log('Login successful:', action.payload);
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.status = 'failed';
+        state.loading = false;
         state.error = action.error.message;
-        console.error('Login failed:', action.error.message);
       });
   },
 });
