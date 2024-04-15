@@ -11,10 +11,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {loginUser} from '../store/authSlice';
 
 const Login = props => {
-  const dispatch = useDispatch();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const {status, error, user} = useSelector(state => state.auth);
+  const dispatch = useDispatch();[]
+  const [username, setUsername] = useState('kminchelle');
+  const [password, setPassword] = useState('0lelplR');
+  const {loading, error, user} = useSelector(state => state.auth);
 
   const handleLogin = async () => {
     if (!username || !password) {
@@ -29,7 +29,6 @@ const Login = props => {
       props.navigation.navigate('Home');
     }
   }, [user]);
-
 
   return (
     <View style={{flex: 1, justifyContent: 'center', padding: 20}}>
@@ -62,7 +61,7 @@ const Login = props => {
         }}>
         <Text>Login</Text>
       </TouchableOpacity>
-      {status === 'failed' && <Text>Error: {error}</Text>}
+      {loading === 'failed' && <Text>Error: {error}</Text>}
     </View>
   );
 };
