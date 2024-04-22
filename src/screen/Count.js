@@ -1,19 +1,16 @@
 import React from "react";
 import { View,Text, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
-import { decrement, increment, incrementByAmount,} from "../store/counterReducer";
+import { decrement, increment} from "../store/authSlice";
 
-const Count =()=>{
-    const count = useSelector(state => state.counter.value);
+const Count =(props)=>{
+    const count = useSelector(state => state.reducer.auth.value);
     const dispatch = useDispatch();
 
     return(
-        <View style={{flexDirection:'row',justifyContent:'space-around',paddingTop:'100%'}}>
+        <View style={{flexDirection:'row',justifyContent:'space-around',paddingTop:'10%'}}>
             <TouchableOpacity style={{alignSelf:'center'}} onPress={()=>dispatch(increment())}>
                 <Text style={{fontSize:50}}>+</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{alignSelf:'center'}} onPress={()=>dispatch(incrementByAmount(4))}>
-                <Text style={{fontSize:50}}>4</Text>
             </TouchableOpacity>
             <Text style={{fontSize:50}}>{count}</Text>
             <TouchableOpacity style={{alignSelf:'center'}} onPress={()=>dispatch(decrement())}>
