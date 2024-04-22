@@ -14,7 +14,6 @@ export const loginUser = createAsyncThunk(
       }),
     });
     const data = await response.json();
-    console.log('Login API response:', data);
     return data;
   },
 );
@@ -22,11 +21,22 @@ export const loginUser = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
+    value: 0,
     user: null,
     loading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    increment: (state) => {
+      state.value += 1
+    },
+    decrement: (state) => {
+      state.value -= 1
+    },
+    incrementByAmount: (state, action) => {
+      state.value += action.payload
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(loginUser.pending, state => {
@@ -43,4 +53,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { increment ,decrement} = authSlice.actions;
 export default authSlice.reducer;

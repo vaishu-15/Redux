@@ -8,13 +8,19 @@ import {
   Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {loginUser} from '../store/authSlice';
+import { loginUser } from '../store/authSlice';
 
 const Login = props => {
-  const dispatch = useDispatch();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const {status, error, user} = useSelector(state => state.auth);
+  const dispatch = useDispatch();[]
+  const [username, setUsername] = useState('kminchelle');
+  const [password, setPassword] = useState('0lelplR');
+  const {error,loading} = useSelector(state => state.reducer.auth);
+
+  const user=useSelector(state => state.reducer.auth.user);
+
+  console.log('error',error);
+  console.log('loading',loading);
+  console.log('user',user);
 
   const handleLogin = async () => {
     if (!username || !password) {
@@ -29,7 +35,6 @@ const Login = props => {
       props.navigation.navigate('Home');
     }
   }, [user]);
-
 
   return (
     <View style={{flex: 1, justifyContent: 'center', padding: 20}}>
@@ -62,7 +67,7 @@ const Login = props => {
         }}>
         <Text>Login</Text>
       </TouchableOpacity>
-      {status === 'failed' && <Text>Error: {error}</Text>}
+      {loading === 'failed' && <Text>Error: {error}</Text>}
     </View>
   );
 };
