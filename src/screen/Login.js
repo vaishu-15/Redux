@@ -16,7 +16,7 @@ const Login = props => {
   const [password, setPassword] = useState('0lelplR');
   const {error,loading} = useSelector(state => state.reducer.auth);
 
-  const user=useSelector(state => state.reducer.auth.user);
+  const user = useSelector(state => state.reducer.auth.user);
 
   console.log('error',error);
   console.log('loading',loading);
