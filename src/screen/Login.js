@@ -14,13 +14,14 @@ const Login = props => {
   const dispatch = useDispatch();[]
   const [username, setUsername] = useState('kminchelle');
   const [password, setPassword] = useState('0lelplR');
+
   const {error,loading} = useSelector(state => state.reducer.auth);
 
   const user = useSelector(state => state.reducer.auth.user);
 
   console.log('error',error);
-  console.log('loading',loading);
-  console.log('user',user);
+  // console.log('loading',loading);
+  // console.log('user',user);
 
   const handleLogin = async () => {
     if (!username || !password) {
@@ -31,7 +32,7 @@ const Login = props => {
   };
 
     useEffect(() => {
-    if (user && user.username === username) {
+    if (user && user.username === username ) {
       props.navigation.navigate('Home');
     }
   }, [user]);
