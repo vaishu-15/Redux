@@ -12,18 +12,15 @@ import { loginUser } from '../store/authSlice';
 
 const Login = props => {
   const dispatch = useDispatch();[]
-  const [username, setUsername] = useState('kminchelle');
-  const [password, setPassword] = useState('0lelplR');
+  const [username, setUsername] = useState('doejohn');
+  const [password, setPassword] = useState('test@123');
 
   const {error,loading} = useSelector(state => state.reducer.auth);
 
-  const user = useSelector(state => state.reducer.auth.user);
+  const users = useSelector(state => state.reducer.auth.user);
+  console.log('users',users);
 
-  console.log('error',error);
-  // console.log('loading',loading);
-  // console.log('user',user);
-
-  const handleLogin = async () => {
+const handleLogin = async () => {
     if (!username || !password) {
       Alert.alert('Error', 'Please enter username and password.');
       return;
@@ -32,10 +29,10 @@ const Login = props => {
   };
 
     useEffect(() => {
-    if (user && user.username === username ) {
+    if (users && users.username === username ) {
       props.navigation.navigate('Home');
     }
-  }, [user]);
+  }, [users]);
 
   return (
     <View style={{flex: 1, justifyContent: 'center', padding: 20}}>
@@ -82,6 +79,5 @@ const styles = StyleSheet.create({
     fontSize:20
   },
 });
-
 
 export default Login;
