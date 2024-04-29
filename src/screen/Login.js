@@ -11,7 +11,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import { loginUser } from '../store/authSlice';
 
 const Login = props => {
-  const dispatch = useDispatch();[]
+
+  const dispatch = useDispatch();
   const [username, setUsername] = useState('kminchelle');
   const [password, setPassword] = useState('0lelplR');
 
@@ -19,8 +20,6 @@ const Login = props => {
 
   const user = useSelector(state => state.reducer.auth.user);
 
-  console.log('error',error);
-  console.log('loading',loading);
   console.log('user',user);
 
   const handleLogin = async () => {

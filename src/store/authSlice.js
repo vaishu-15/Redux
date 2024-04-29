@@ -3,6 +3,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({username, password}) => {
+    // console.log('username',username)
     const response = await fetch('https://dummyjson.com/auth/login', {
       method: 'POST',
       headers: {

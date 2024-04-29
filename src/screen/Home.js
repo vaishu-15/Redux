@@ -6,15 +6,12 @@ import { loginUser } from '../store/authSlice';
 
 const Home = (props) => {
   
-  // const loginData = useSelector(state=>state.reducer.auth.user)
+  const loginData = useSelector(state=>state.reducer.auth.user)
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.container}>
-     <TouchableOpacity onPress={()=>props.navigation.goBack('')} style={styles.text}>
-      <Text> &larr; Back</Text>
-      </TouchableOpacity>
-      {/* <TouchableOpacity onPress={()=>props.navigation.goBack('')} style={styles.text}>
+      <TouchableOpacity onPress={()=>props.navigation.goBack('')} style={styles.text}>
       <Text> &larr; Back</Text>
       </TouchableOpacity>
       <View style={styles.dataContainer}>
@@ -64,11 +61,6 @@ const Home = (props) => {
          placeholderTextColor={'black'}
          />
          </View>
-      </View> */}
-      <View>
-        <Text>
-          Home
-        </Text>
       </View>
     </View>
     </ScrollView>
