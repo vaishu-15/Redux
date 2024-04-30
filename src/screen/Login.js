@@ -11,16 +11,18 @@ import {useDispatch, useSelector} from 'react-redux';
 import { loginUser } from '../store/authSlice';
 
 const Login = props => {
-  const dispatch = useDispatch();[]
-  const [username, setUsername] = useState('doejohn');
-  const [password, setPassword] = useState('test@123');
+
+  const dispatch = useDispatch();
+  const [username, setUsername] = useState('kminchelle');
+  const [password, setPassword] = useState('0lelplR');
 
   const {error,loading} = useSelector(state => state.reducer.auth);
 
-  const users = useSelector(state => state.reducer.auth.user);
-  console.log('users',users);
+  const user = useSelector(state => state.reducer.auth.user);
 
-const handleLogin = async () => {
+  // console.log('user',user);
+
+  const handleLogin = async () => {
     if (!username || !password) {
       Alert.alert('Error', 'Please enter username and password.');
       return;
@@ -29,10 +31,10 @@ const handleLogin = async () => {
   };
 
     useEffect(() => {
-    if (users && users.username === username ) {
+    if (user && user.username === username ) {
       props.navigation.navigate('Home');
     }
-  }, [users]);
+  }, [user]);
 
   return (
     <View style={{flex: 1, justifyContent: 'center', padding: 20}}>

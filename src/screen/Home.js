@@ -1,20 +1,33 @@
-import React from 'react';
-import {Text, TouchableOpacity, View,StyleSheet, Image, TextInput, ScrollView} from 'react-native';
-import { useSelector } from 'react-redux';
-import Count from './Count';
-import { loginUser } from '../store/authSlice';
+import { React, useState, useEffect } from 'react';
+import { Text, TouchableOpacity, View, StyleSheet, Image, TextInput, ScrollView } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../store/authSlice';
 
 const Home = (props) => {
-  
-  // const loginData = useSelector(state=>state.reducer.auth.user)
+  const dispatch = useDispatch();
+  const loginData = useSelector(state => state?.reducer?.auth?.user);
+  const updateUserData = useSelector(state => state?.reducer?.auth);
+
+  console.log('updated data', updateUserData);
+
+ const [updatedUserData, setUpdatedUserData] = useState(loginData || {});
+
+   useEffect(() => {
+    setUpdatedUserData(loginData);
+  }, [loginData]);
+
+    const handleUpdate = (field, value) => {
+    setUpdatedUserData({ ...updatedUserData, [field]: value });
+    };
+
+  const handleSave = () => {
+    dispatch(updateUser(updatedUserData));
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.container}>
-     <TouchableOpacity onPress={()=>props.navigation.goBack('')} style={styles.text}>
-      <Text> &larr; Back</Text>
-      </TouchableOpacity>
-      {/* <TouchableOpacity onPress={()=>props.navigation.goBack('')} style={styles.text}>
+      <TouchableOpacity onPress={()=>props.navigation.goBack('')} style={styles.text}>
       <Text> &larr; Back</Text>
       </TouchableOpacity>
       <View style={styles.dataContainer}>
@@ -28,47 +41,55 @@ const Home = (props) => {
          <Text style={styles.fields}>firstName:</Text>
          <TextInput
          style={styles.input}
-         placeholder={loginData.firstName}
+         //  placeholder={loginData.firstName}
          placeholderTextColor={'black'}
+         value={updatedUserData?.firstName || ''}
+         onChangeText={(value) => handleUpdate('firstName', value)}
          />
          </View>
          <View style={styles.inputContainer}>
          <Text style={styles.fields}>lastName:</Text>
          <TextInput
          style={styles.input}
-         placeholder={loginData.lastName}
+        //  placeholder={loginData.lastName}
          placeholderTextColor={'black'}
+         value={updatedUserData?.lastName || ''}
+         onChangeText={(value) => handleUpdate('lastName', value)}
          />
          </View>
          <View style={styles.inputContainer}>
          <Text style={styles.fields}>UserName:</Text>
          <TextInput
          style={styles.input}
-         placeholder={loginData.username}
+        //  placeholder={loginData.username}
          placeholderTextColor={'black'}
+          value={updatedUserData?.username || ''}
+          onChangeText={(value) => handleUpdate('username', value)}
          />
          </View>
          <View style={styles.inputContainer}>
          <Text style={styles.fields}>Email:</Text>
          <TextInput
          style={styles.input}
-         placeholder={loginData.email}
-         placeholderTextColor={'black'}
+        //  placeholder={loginData.email}
+          placeholderTextColor={'black'}
+          value={updatedUserData?.email || ''}
+          onChangeText={(value) => handleUpdate('email', value)}
          />
          </View>
          <View style={styles.inputContainer}>
          <Text style={styles.fields}>gender:</Text>
          <TextInput
          style={styles.input}
-         placeholder={loginData.gender}
+        //  placeholder={loginData.gender}
          placeholderTextColor={'black'}
+         value={updatedUserData?.gender || ''}
+          onChangeText={(value) => handleUpdate('gender', value)}
          />
          </View>
-      </View> */}
-      <View>
-        <Text>
-          Home
-        </Text>
+         <TouchableOpacity style={styles.buttonContainer} onPress={handleSave}>
+          <Text style={styles.button}>Update</Text>
+         </TouchableOpacity>
       </View>
     </View>
     </ScrollView>
@@ -113,5 +134,12 @@ const styles = StyleSheet.create({
   fields:{
     marginHorizontal:30,
     fontSize:20
+  },
+  button:{
+      fontSize:20
+  },
+  buttonContainer:{
+    padding:15,
+    borderWidth:1
   }
 })

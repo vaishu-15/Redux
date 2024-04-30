@@ -1,11 +1,9 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
-  async ({username, password}) => {
-    // console.log('username',username);
-    // console.log('password',password);
-    const response = await fetch('https://api.freeapi.app/api/v1/users/login', {
+  async ({ username, password }) => {
+    const response = await fetch('https://dummyjson.com/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -23,11 +21,15 @@ export const loginUser = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
+    value: 0,
     user: null,
     loading: false,
     error: null,
   },
   reducers: {
+    updateUser(state, action) {
+      state.user = action.payload;
+    },
   },
   extraReducers: builder => {
     builder
@@ -44,5 +46,7 @@ const authSlice = createSlice({
       });
   },
 });
+
+export const { updateUser } = authSlice.actions;
 
 export default authSlice.reducer;
