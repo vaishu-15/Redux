@@ -3,7 +3,6 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({username, password}) => {
-    // console.log('username',username)
     const response = await fetch('https://dummyjson.com/auth/login', {
       method: 'POST',
       headers: {
@@ -28,14 +27,8 @@ const authSlice = createSlice({
     error: null,
   },
   reducers: {
-    increment: (state) => {
-      state.value += 1
-    },
-    decrement: (state) => {
-      state.value -= 1
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload
+    updateUser(state, action) {
+      state.user = action.payload;
     },
   },
   extraReducers: builder => {
@@ -54,5 +47,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { increment ,decrement} = authSlice.actions;
+export const { updateUser } = authSlice.actions;
 export default authSlice.reducer;

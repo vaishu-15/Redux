@@ -1,10 +1,25 @@
-import React from 'react';
+import {React,useState,useEffect} from 'react';
 import {Text, TouchableOpacity, View,StyleSheet, Image, TextInput, ScrollView} from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../store/authSlice';
 
 const Home = (props) => {
-  
+
+  const dispatch = useDispatch();
   const loginData = useSelector(state=>state.reducer.auth.user)
+
+  console.log('updated data',loginData)
+
+  const [userData, setUserData] = useState(loginData || {});
+
+  useEffect(() => {
+    setUserData(loginData);
+  }, [loginData]);
+
+  const handleUpdate = (field, value) => {
+    setUserData(prevData => ({ ...prevData, [field]: value }));
+    dispatch(updateUser({ ...userData, [field]: value }));
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -23,43 +38,53 @@ const Home = (props) => {
          <Text style={styles.fields}>firstName:</Text>
          <TextInput
          style={styles.input}
-         placeholder={loginData.firstName}
+        //  placeholder={loginData.firstName}
          placeholderTextColor={'black'}
+         value={userData.firstName || ''}
+        onChangeText={(value) => handleUpdate('firstName', value)}
          />
          </View>
          <View style={styles.inputContainer}>
          <Text style={styles.fields}>lastName:</Text>
          <TextInput
          style={styles.input}
-         placeholder={loginData.lastName}
+        //  placeholder={loginData.lastName}
          placeholderTextColor={'black'}
+        value={userData.lastName || ''}
+          onChangeText={(value) => handleUpdate('lastName', value)}
          />
          </View>
          <View style={styles.inputContainer}>
          <Text style={styles.fields}>UserName:</Text>
          <TextInput
          style={styles.input}
-         placeholder={loginData.username}
+        //  placeholder={loginData.username}
          placeholderTextColor={'black'}
+          value={userData.username || ''}
+          onChangeText={(value) => handleUpdate('username', value)}
          />
          </View>
          <View style={styles.inputContainer}>
          <Text style={styles.fields}>Email:</Text>
          <TextInput
          style={styles.input}
-         placeholder={loginData.email}
+        //  placeholder={loginData.email}
          placeholderTextColor={'black'}
+           value={userData.email || ''}
+          onChangeText={(value) => handleUpdate('email', value)}
          />
          </View>
          <View style={styles.inputContainer}>
          <Text style={styles.fields}>gender:</Text>
          <TextInput
          style={styles.input}
-         placeholder={loginData.gender}
+        //  placeholder={loginData.gender}
          placeholderTextColor={'black'}
+         value={userData.gender || ''}
+          onChangeText={(value) => handleUpdate('gender', value)}
          />
          </View>
-         <TouchableOpacity style={styles.buttonContainer}>
+         <TouchableOpacity style={styles.buttonContainer} onPress={handleUpdate}>
           <Text style={styles.button}>Update</Text>
          </TouchableOpacity>
       </View>

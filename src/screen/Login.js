@@ -20,7 +20,7 @@ const Login = props => {
 
   const user = useSelector(state => state.reducer.auth.user);
 
-  console.log('user',user);
+  // console.log('user',user);
 
   const handleLogin = async () => {
     if (!username || !password) {
