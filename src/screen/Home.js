@@ -1,24 +1,27 @@
-import {React,useState,useEffect} from 'react';
-import {Text, TouchableOpacity, View,StyleSheet, Image, TextInput, ScrollView} from 'react-native';
+import { React, useState, useEffect } from 'react';
+import { Text, TouchableOpacity, View, StyleSheet, Image, TextInput, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../store/authSlice';
 
 const Home = (props) => {
-
   const dispatch = useDispatch();
-  const loginData = useSelector(state=>state.reducer.auth.user)
+  const loginData = useSelector(state => state?.reducer?.auth?.user);
+  const updateUserData = useSelector(state => state?.reducer?.auth);
 
-  console.log('updated data',loginData)
+  console.log('updated data', updateUserData);
 
-  const [userData, setUserData] = useState(loginData || {});
+ const [updatedUserData, setUpdatedUserData] = useState(loginData || {});
 
-  useEffect(() => {
-    setUserData(loginData);
+   useEffect(() => {
+    setUpdatedUserData(loginData);
   }, [loginData]);
 
-  const handleUpdate = (field, value) => {
-    setUserData(prevData => ({ ...prevData, [field]: value }));
-    dispatch(updateUser({ ...userData, [field]: value }));
+    const handleUpdate = (field, value) => {
+    setUpdatedUserData({ ...updatedUserData, [field]: value });
+    };
+
+  const handleSave = () => {
+    dispatch(updateUser(updatedUserData));
   };
 
   return (
@@ -38,10 +41,10 @@ const Home = (props) => {
          <Text style={styles.fields}>firstName:</Text>
          <TextInput
          style={styles.input}
-        //  placeholder={loginData.firstName}
+         //  placeholder={loginData.firstName}
          placeholderTextColor={'black'}
-         value={userData.firstName || ''}
-        onChangeText={(value) => handleUpdate('firstName', value)}
+         value={updatedUserData?.firstName || ''}
+         onChangeText={(value) => handleUpdate('firstName', value)}
          />
          </View>
          <View style={styles.inputContainer}>
@@ -50,8 +53,8 @@ const Home = (props) => {
          style={styles.input}
         //  placeholder={loginData.lastName}
          placeholderTextColor={'black'}
-        value={userData.lastName || ''}
-          onChangeText={(value) => handleUpdate('lastName', value)}
+         value={updatedUserData?.lastName || ''}
+         onChangeText={(value) => handleUpdate('lastName', value)}
          />
          </View>
          <View style={styles.inputContainer}>
@@ -60,7 +63,7 @@ const Home = (props) => {
          style={styles.input}
         //  placeholder={loginData.username}
          placeholderTextColor={'black'}
-          value={userData.username || ''}
+          value={updatedUserData?.username || ''}
           onChangeText={(value) => handleUpdate('username', value)}
          />
          </View>
@@ -69,8 +72,8 @@ const Home = (props) => {
          <TextInput
          style={styles.input}
         //  placeholder={loginData.email}
-         placeholderTextColor={'black'}
-           value={userData.email || ''}
+          placeholderTextColor={'black'}
+          value={updatedUserData?.email || ''}
           onChangeText={(value) => handleUpdate('email', value)}
          />
          </View>
@@ -80,11 +83,11 @@ const Home = (props) => {
          style={styles.input}
         //  placeholder={loginData.gender}
          placeholderTextColor={'black'}
-         value={userData.gender || ''}
+         value={updatedUserData?.gender || ''}
           onChangeText={(value) => handleUpdate('gender', value)}
          />
          </View>
-         <TouchableOpacity style={styles.buttonContainer} onPress={handleUpdate}>
+         <TouchableOpacity style={styles.buttonContainer} onPress={handleSave}>
           <Text style={styles.button}>Update</Text>
          </TouchableOpacity>
       </View>

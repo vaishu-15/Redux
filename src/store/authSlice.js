@@ -1,8 +1,8 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
-  async ({username, password}) => {
+  async ({ username, password }) => {
     const response = await fetch('https://dummyjson.com/auth/login', {
       method: 'POST',
       headers: {
@@ -48,4 +48,5 @@ const authSlice = createSlice({
 });
 
 export const { updateUser } = authSlice.actions;
+
 export default authSlice.reducer;
