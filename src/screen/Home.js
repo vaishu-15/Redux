@@ -1,8 +1,6 @@
 import React from 'react';
 import {Text, TouchableOpacity, View,StyleSheet, Image, TextInput, ScrollView} from 'react-native';
 import { useSelector } from 'react-redux';
-import Count from './Count';
-import { loginUser } from '../store/authSlice';
 
 const Home = (props) => {
   
@@ -61,6 +59,9 @@ const Home = (props) => {
          placeholderTextColor={'black'}
          />
          </View>
+         <TouchableOpacity style={styles.buttonContainer}>
+          <Text style={styles.button}>Update</Text>
+         </TouchableOpacity>
       </View>
     </View>
     </ScrollView>
@@ -105,5 +106,12 @@ const styles = StyleSheet.create({
   fields:{
     marginHorizontal:30,
     fontSize:20
+  },
+  button:{
+      fontSize:20
+  },
+  buttonContainer:{
+    padding:15,
+    borderWidth:1
   }
 })
