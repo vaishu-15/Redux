@@ -1,4 +1,4 @@
-import { React, useState} from 'react';
+import { React, useState,useEffect} from 'react';
 import { Text, TouchableOpacity, View, StyleSheet, Image, TextInput, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLocalUser } from '../store/authSlice';
@@ -10,7 +10,11 @@ const Home = (props) => {
     const updatedUserData = useSelector(state => state?.reducer?.auth?.updatedUser);
     console.log('updatedUserData', updatedUserData);
 
-  const [localData, setLocalData] = useState(loginData || {});
+  const [localData, setLocalData] = useState(updatedUserData || loginData || {});
+
+   useEffect(() => {
+    setLocalData(updatedUserData || loginData || {});
+  }, [updatedUserData, loginData]);
 
   // Function to update local changes
   const handleUpdate = (field, value) => {
