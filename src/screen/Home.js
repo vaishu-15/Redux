@@ -1,27 +1,30 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState,useEffect} from 'react';
 import { Text, TouchableOpacity, View, StyleSheet, Image, TextInput, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUser } from '../store/authSlice';
+import { updateLocalUser } from '../store/authSlice';
 
 const Home = (props) => {
-  const dispatch = useDispatch();
-  const loginData = useSelector(state => state?.reducer?.auth?.user);
-  const updateUserData = useSelector(state => state?.reducer?.auth);
+   const dispatch = useDispatch();
+    const loginData = useSelector(state => state?.reducer?.auth?.user);
+    console.log('logindata', loginData);
+    const updatedUserData = useSelector(state => state?.reducer?.auth?.updatedUser);
+    console.log('updatedUserData', updatedUserData);
 
-  console.log('updated data', updateUserData);
-
- const [updatedUserData, setUpdatedUserData] = useState(loginData || {});
+  const [localData, setLocalData] = useState(updatedUserData || loginData || {});
 
    useEffect(() => {
-    setUpdatedUserData(loginData);
-  }, [loginData]);
+    setLocalData(updatedUserData || loginData || {});
+  }, [updatedUserData, loginData]);
 
-    const handleUpdate = (field, value) => {
-    setUpdatedUserData({ ...updatedUserData, [field]: value });
-    };
+  // Function to update local changes
+  const handleUpdate = (field, value) => {
+    setLocalData(prevData => ({ ...prevData, [field]: value }));
+  };
 
+  // Function to save local changes to the store
   const handleSave = () => {
-    dispatch(updateUser(updatedUserData));
+    dispatch(updateLocalUser(localData)); // Dispatch action to update local user data in the store
+    console.log("Updated local user data:", localData);
   };
 
   return (
@@ -41,9 +44,8 @@ const Home = (props) => {
          <Text style={styles.fields}>firstName:</Text>
          <TextInput
          style={styles.input}
-         //  placeholder={loginData.firstName}
          placeholderTextColor={'black'}
-         value={updatedUserData?.firstName || ''}
+         value={localData?.firstName || ''}
          onChangeText={(value) => handleUpdate('firstName', value)}
          />
          </View>
@@ -51,9 +53,8 @@ const Home = (props) => {
          <Text style={styles.fields}>lastName:</Text>
          <TextInput
          style={styles.input}
-        //  placeholder={loginData.lastName}
          placeholderTextColor={'black'}
-         value={updatedUserData?.lastName || ''}
+         value={localData?.lastName || ''}
          onChangeText={(value) => handleUpdate('lastName', value)}
          />
          </View>
@@ -61,19 +62,17 @@ const Home = (props) => {
          <Text style={styles.fields}>UserName:</Text>
          <TextInput
          style={styles.input}
-        //  placeholder={loginData.username}
          placeholderTextColor={'black'}
-          value={updatedUserData?.username || ''}
+          value={localData?.username || ''}
           onChangeText={(value) => handleUpdate('username', value)}
          />
          </View>
          <View style={styles.inputContainer}>
          <Text style={styles.fields}>Email:</Text>
          <TextInput
-         style={styles.input}
-        //  placeholder={loginData.email}
+          style={styles.input}
           placeholderTextColor={'black'}
-          value={updatedUserData?.email || ''}
+          value={localData?.email || ''}
           onChangeText={(value) => handleUpdate('email', value)}
          />
          </View>
@@ -81,9 +80,8 @@ const Home = (props) => {
          <Text style={styles.fields}>gender:</Text>
          <TextInput
          style={styles.input}
-        //  placeholder={loginData.gender}
          placeholderTextColor={'black'}
-         value={updatedUserData?.gender || ''}
+         value={localData?.gender || ''}
           onChangeText={(value) => handleUpdate('gender', value)}
          />
          </View>
